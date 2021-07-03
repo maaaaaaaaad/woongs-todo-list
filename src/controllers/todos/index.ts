@@ -31,3 +31,25 @@ const postTodo = async (req: Request, res: Response): Promise<void> => {
     throw error;
   }
 };
+
+const updateTodo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {
+      params: { id },
+      body,
+    } = req;
+
+    const updateTodo: ITodo | null = await TodoModel.findByIdAndUpdate(
+      { _id: id },
+      body
+    );
+
+    const allTodos: ITodo[] = await TodoModel.find({});
+
+    res
+      .status(200)
+      .json({ message: "Update to Todos", Todo: updateTodo, Todos: allTodos });
+  } catch (error) {
+    throw error;
+  }
+};
