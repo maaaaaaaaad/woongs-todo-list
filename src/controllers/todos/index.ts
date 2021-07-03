@@ -1,14 +1,33 @@
-import { ITodo } from "./../../types/todo";
-import TodoModel from "../../models/todo";
+import { ITodo } from "../../types/ITodo";
+import TodoModel from "../../models/TodoModel";
 import { Request, Response } from "express";
 
 const getTodos = async (req: Request, res: Response): Promise<void> => {
   try {
-    const todos: ITodo[] = await TodoModel.find();
+    const todos: ITodo[] = await TodoModel.find({});
     res.status(200).json({ todos });
   } catch (error) {
     throw error;
   }
 };
 
-const postTodo = () => {};
+const postTodo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const body = req.body as Pick<ITodo, "name" | "description" | "status">;
+
+    const postTodo: ITodo = new TodoModel({
+      name: body.name,
+      description: body.description,
+      status: body.status,
+    });
+
+    const createTodo: ITodo = await postTodo.save();
+    const allTodos: ITodo[] = await TodoModel.find({});
+
+    res
+      .status(200)
+      .json({ message: "Add to Todos", Todo: createTodo, Todos: allTodos });
+  } catch (error) {
+    throw error;
+  }
+};
