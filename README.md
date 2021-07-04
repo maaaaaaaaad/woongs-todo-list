@@ -209,3 +209,19 @@ const updateTodo = async (todo: ITodo): Promise<AxiosResponse<ApiDataType>> => {
   }
 };
 ```
+
+## 4. Axios delete API Code
+
+```javascript
+const deleteTodo = async (_id: string): Promise<AxiosResponse<ApiDataType>> => {
+  try {
+    const deleteTodo: AxiosResponse<ApiDataType> = await axios.delete(
+      `${baseUrl}/delete-todo/${_id}`
+    );
+
+    return deleteTodo;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+```
