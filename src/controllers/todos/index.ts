@@ -53,3 +53,21 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
     throw error;
   }
 };
+
+const deleteTodo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const deleteTodo: ITodo | null = await TodoModel.findByIdAndRemove(
+      req.params.id
+    );
+
+    const allTodos: ITodo[] = await TodoModel.find({});
+
+    res
+      .status(200)
+      .json({ message: "Update to Todos", Todo: deleteTodo, Todos: allTodos });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { getTodos, postTodo, updateTodo, deleteTodo };

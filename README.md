@@ -49,3 +49,51 @@ const getTodos = async (req: Request, res: Response): Promise<void> => {
   }
 };
 ```
+
+## 3. Update Todo data (Update)
+
+```javascript
+const updateTodo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const {
+      params: { id },
+      body,
+    } = req;
+
+    const updateTodo: ITodo | null = await TodoModel.findByIdAndUpdate(
+      { _id: id },
+      body
+    );
+
+    const allTodos: ITodo[] = await TodoModel.find({});
+
+    res
+      .status(200)
+      .json({ message: "Update to Todos", Todo: updateTodo, Todos: allTodos });
+  } catch (error) {
+    throw error;
+  }
+};
+```
+
+## 4. Delete Todo data (Delete)
+
+```javascript
+const deleteTodo = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const deleteTodo: ITodo | null = await TodoModel.findByIdAndRemove(
+      req.params.id
+    );
+
+    const allTodos: ITodo[] = await TodoModel.find({});
+
+    res
+      .status(200)
+      .json({ message: "Update to Todos", Todo: deleteTodo, Todos: allTodos });
+  } catch (error) {
+    throw error;
+  }
+};
+```
+
+- And next, export CRUD
