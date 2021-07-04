@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { addTodo } from "./API";
+import AddTodo from "./components/AddTodo";
 
-function App() {
+const App: React.FC = () => {
+  const [todos, setTodos] = useState<ITodo[]>([]);
+
+  const handelSaveTodo = (event: React.FormEvent, formData: ITodo): void => {
+    event.preventDefault();
+    addTodo(formData)
+      .then(({ status, data }) => {
+        if (status !== 201) {
+          throw new Error("Error! Not saved Todo data Please try again");
+        }
+        setTodos(data.todos);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section>
+      <h1>Woongs Todo List</h1>
+      <AddTodo saveTodo={handelSaveTodo} />
+    </section>
   );
-}
+};
 
 export default App;

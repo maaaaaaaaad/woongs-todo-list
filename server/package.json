@@ -4,7 +4,7 @@
   "description": "Typescript React Node MongoDB Express",
   "main": "index.js",
   "author": "Woong",
-  "license": "MIT",
+  "license": "ISC",
   "scripts": {
     "build": "tsc",
     "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
