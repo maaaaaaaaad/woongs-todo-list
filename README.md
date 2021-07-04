@@ -188,3 +188,24 @@ const addTodo = async (
 ```
 
 - Caution, Omit the "id" property because MongoDB will create it on the fly.
+
+## 3. Axios put API Code
+
+```javascript
+const updateTodo = async (todo: ITodo): Promise<AxiosResponse<ApiDataType>> => {
+  try {
+    const todoUpdate: Pick<ITodo, "status"> = {
+      status: true,
+    };
+
+    const updatedTodo: AxiosResponse<ApiDataType> = await axios.put(
+      `${baseUrl}/edit-todo/${todo._id}`,
+      todoUpdate
+    );
+
+    return updatedTodo;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+```
