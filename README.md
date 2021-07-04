@@ -6,6 +6,8 @@
 2. Front-End: ReactJS
 3. Back-End: NodeJS(Express)
 
+# First, Back-End code
+
 ## 1. Post Todo data (Create)
 
 ```javascript
@@ -117,4 +119,43 @@ router.put("/edit-todo/:id", updateTodo);
 router.delete("/delete-todo/:id", deleteTodo);
 
 export default router;
+```
+
+# Second Front-End code
+
+**Next type.d.ts**
+
+```javascript
+interface ITodo {
+  _id: string;
+  name: string;
+  description: string;
+  status: boolean;
+  createAt?: string;
+  updateAt?: string;
+}
+
+interface TodoProps {
+  todo: ITodo;
+}
+
+type ApiDataType = {
+  message: string,
+  status: string,
+  todos: ITodo[],
+  todo?: ITodo,
+};
+```
+
+## 1. Axios get API code
+
+```javascript
+const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
+  try {
+    const todos = await axios.get(baseUrl + "/todos");
+    return todos;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 ```
