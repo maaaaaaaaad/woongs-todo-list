@@ -5,8 +5,9 @@
 1. Whole language: Typescript
 2. Front-End: ReactJS
 3. Back-End: NodeJS(Express)
+4. API fetcher: Axios
 
-# First, Back-End code
+# First, Back-End Code
 
 ## 1. Post Todo data (Create)
 
@@ -121,9 +122,11 @@ router.delete("/delete-todo/:id", deleteTodo);
 export default router;
 ```
 
-# Second Front-End code
+- Finish Back-End Code 🙂
 
-**Next type.d.ts**
+# Second Create API Code
+
+**Fist of all, Create a type.d.ts file**
 
 ```javascript
 interface ITodo {
@@ -147,7 +150,7 @@ type ApiDataType = {
 };
 ```
 
-## 1. Axios get API code
+## 1. Axios get API Code
 
 ```javascript
 const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
@@ -159,3 +162,29 @@ const getTodos = async (): Promise<AxiosResponse<ApiDataType>> => {
   }
 };
 ```
+
+## 2. Axios post API Code
+
+```javascript
+const addTodo = async (
+  formData: ITodo
+): Promise<AxiosResponse<ApiDataType>> => {
+  try {
+    const todo: Omit<ITodo, "_id"> = {
+      name: formData.name,
+      description: formData.description,
+      status: false,
+    };
+
+    const saveTodo: AxiosResponse<ApiDataType> = await axios.post(
+      baseUrl + "/post-todo",
+      todo
+    );
+    return saveTodo;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+```
+
+- Caution, Omit the "id" property because MongoDB will create it on the fly.
