@@ -8,6 +8,18 @@
 4. API fetcher: Axios
 5. DataBase: MongoDB(Mongoose) atlas
 
+- first of all, need to types that a ITodo.ts file
+
+```javascript
+import { Document } from "mongoose";
+
+export interface ITodo extends Document {
+  name: string;
+  description: string;
+  status: boolean;
+}
+```
+
 # First, Back-End Code
 
 ## 1. Post Todo data (Create)
