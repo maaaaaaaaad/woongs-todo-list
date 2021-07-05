@@ -8,9 +8,11 @@
 4. API fetcher: Axios
 5. DataBase: MongoDB(Mongoose) atlas
 
-- first of all, need to types that a ITodo.ts file
+- First of all, need to types that a ITodo.ts file
+- Second, Mongoose model ref.
 
 ```javascript
+// ITodo.ts
 import { Document } from "mongoose";
 
 export interface ITodo extends Document {
@@ -18,6 +20,37 @@ export interface ITodo extends Document {
   description: string;
   status: boolean;
 }
+```
+
+```javascript
+// Mongoose model
+
+import { ITodo } from "../types/ITodo";
+import { model, Schema } from "mongoose";
+
+const todoSchema: Schema = new Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+    },
+
+    description: {
+      type: String,
+      required: true,
+    },
+
+    status: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
+
+const TodoModel = model < ITodo > ("Todo", todoSchema);
+
+export default TodoModel;
 ```
 
 # First, Back-End Code
