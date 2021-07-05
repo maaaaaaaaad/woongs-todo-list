@@ -6,6 +6,7 @@
 2. Front-End: ReactJS
 3. Back-End: NodeJS(Express)
 4. API fetcher: Axios
+5. DataBase: MongoDB(Mongoose) atlas
 
 # First, Back-End Code
 
@@ -281,4 +282,32 @@ const AddTodo: React.FC<Props> = ({ saveTodo }) => {
 
 export default AddTodo;
 
+```
+
+## 2. Todo Item Component (TodoItemList.tsx)
+
+```javascript
+import React from "react";
+
+type Props = TodoProps & {
+  updateTodo: (todo: ITodo) => void,
+  deleteTodo: (_id: string) => void,
+};
+
+const TodoItemList: React.FC<Props> = ({ todo, updateTodo, deleteTodo }) => {
+  return (
+    <section>
+      <header>
+        <h1>{todo.name}</h1>
+        <div>{todo.description}</div>
+      </header>
+      <main>
+        <button onClick={() => updateTodo(todo)}></button>
+        <button onClick={() => deleteTodo(todo._id)}></button>
+      </main>
+    </section>
+  );
+};
+
+export default TodoItemList;
 ```
